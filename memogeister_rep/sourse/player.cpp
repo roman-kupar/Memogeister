@@ -63,5 +63,26 @@ void Player::update(float deltaTime)
 
 }
 
+void Player::gatherPlant(Entity* plant) {
+    if (plant->getType() == Entity::Type::Plant) {
+        gatheredPlants.push_back(plant);
+    }
+}
+
+const std::vector<Entity*>& Player::getGatheredPlants() const {
+    return gatheredPlants;
+}
+
 void Player::onCollide(Entity& other)
-{}
+{
+    switch (other.getType())
+    {
+    case Type::Plant:
+        gatherPlant(&other);
+        break;
+    case Type::Ghost:
+        touched = true;
+    default:
+        break;
+    }
+}

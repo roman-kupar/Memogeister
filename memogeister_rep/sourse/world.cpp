@@ -14,6 +14,24 @@ void World::add(std::unique_ptr<Entity> entity)
 
 }
 
+void World::removeGhost()
+{
+	if (ghost) {
+		ghost->toRemove = true; // Mark the ghost for removal
+		ghost = nullptr;       // Clear the ghost pointer for safety
+	}
+}
+
+void World::removePlayer()
+{
+	if (player->touched) {
+		if (player) {
+			player->toRemove = true; // Mark the ghost for removal
+			player = nullptr;       // Clear the ghost pointer for safety
+		}
+	}
+}
+
 bool World::checkIfAllFlowersGathered()
 {
 	for (const auto& entityPtr : entities) {
@@ -27,6 +45,17 @@ bool World::checkIfAllFlowersGathered()
 void World::sendGhostBack()
 {
 	ghost->isToGoBack = true;
+}
+
+void World::setStartPositionPlayer()
+{
+	player->setPosition(300.f, 300.f);
+	player->clearGatheredPlants();
+}
+
+Player* World::getPlayer()
+{
+	return player;
 }
 
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -50,6 +79,8 @@ void World::update(float deltaTime)
 {
 	checkCollision();
 
+	removePlayer();
+
 	auto& entitiesRef = entities;
 	entities.erase(std::remove_if(entities.begin(), entities.end(), [this, &deltaTime, &entitiesRef](const auto& entityPtr) {
 		Entity& entity = *entityPtr;
@@ -67,7 +98,7 @@ void World::update(float deltaTime)
 		sf::Vector2f playerPos = player->getPosition();
 		sf::Vector2f ghostPos = ghost->getPosition();
 
-		float interactionRadius = 30.f;
+		float interactionRadius = 200.f;
 
 		bool isPlayerInsideSquare =
 			playerPos.x >= ghostPos.x - interactionRadius &&
@@ -76,15 +107,15 @@ void World::update(float deltaTime)
 			playerPos.y <= ghostPos.y + interactionRadius;
 
 		if (isPlayerInsideSquare && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			std::cout << "Player inside interaction square. Starting cutscene...\n";
+			cutScenePlants = player->getGatheredPlants();
 			startCutScene();
 		}
 		else {
 			if (!isPlayerInsideSquare) {
-				std::cout << "Player outside interaction square.\n";
+				
 			}
 			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-				std::cout << "Space key not pressed.\n";
+
 			}
 		}
 	}
@@ -113,4 +144,9 @@ void World::checkCollision()
 			}
 		}
 	}
+}
+
+bool World::isPlayerDead() const
+{
+	return player==nullptr;
 }

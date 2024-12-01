@@ -50,6 +50,9 @@ public:
 
 	bool toRemove = false;
 
+	int number;
+
+
 protected:
 	friend class Player;
 	friend class Plant;

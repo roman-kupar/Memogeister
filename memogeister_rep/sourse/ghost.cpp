@@ -1,10 +1,24 @@
 #include "../include/ghost.h"
 #include <iostream>
 
-Ghost::Ghost(World& world, sf::RenderWindow& window) : Entity(world, ResourceManager::Texture::Ghost1, Type::Ghost), window(window), elapsedTime(0.0f), startingPoint(sf::VideoMode::getDesktopMode().width - 65.f, sf::VideoMode::getDesktopMode().height / 2)
+Ghost::Ghost(World& world, sf::RenderWindow& window, GhostType ghostType) : Entity(world, ResourceManager::Texture::Ghost1, Type::Ghost), window(window), elapsedTime(0.0f), startingPoint(sf::VideoMode::getDesktopMode().width - 65.f, sf::VideoMode::getDesktopMode().height / 2),
+ghostType(ghostType)
 {
 	directionNeedToBeChanged = false;
 	isOnTheRightPlace = false;
+
+	if (ghostType == GhostType::Ghost2)
+	{
+		changeTexture(ResourceManager::Texture::Ghost2);
+	}
+	else if (ghostType == GhostType::Ghost3)
+	{
+		changeTexture(ResourceManager::Texture::Ghost3);
+	}
+	else if (ghostType == GhostType::Sister)
+	{
+		changeTexture(ResourceManager::Texture::Sister);
+	}
 
 	setPosition(startingPoint);
 

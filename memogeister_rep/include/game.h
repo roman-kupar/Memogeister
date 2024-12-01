@@ -10,9 +10,6 @@
 class Game
 {
 private:
-
-	
-
 	enum GameState
 	{
 		StartScreen,
@@ -23,8 +20,18 @@ private:
 		Exiting
 	};
 
+	enum AllCutscenes
+	{
+		Ghost1,
+		Ghost2,
+		Ghost3,
+		Sister
+	};
 
+	AllCutscenes currentCutscene;
 	GameState gameState;
+
+
 
 	sf::VideoMode videoMode;
 	sf::RenderWindow window;
@@ -33,7 +40,7 @@ private:
 	World world;
 	Configuration configuration;
 	
-	sf::Sprite background, mainMenu, ghost1Full;
+	sf::Sprite background, mainMenu, bg, ghost1Full, ghost2Full, ghost3Full, sisterFull, flowerTable, introPaper, gameOver;
 
 	unsigned int width;
 	unsigned int height;
@@ -47,9 +54,17 @@ public:
 	void handlePlaying(float deltaTime);
 	void handleStartScreen();
 	void handleCutScene();
+	void handleGameOverScreen();
+
+	void playCurrentScene();
 
 	void pollEvents();
 	void pollEventsStartScreen();
+	void pollEventsCutscene();
+	void pollEventsGameOver();
+
+	void checkPlayer();
+	void proceedToNextCutscene();
 
 	const bool running() const;
 	void run();

@@ -53,12 +53,21 @@ public:
 
 	void startCutScene();
 
+	void removeGhost();
+	void removePlayer();
+
+	void setStartPositionPlayer();
+
+	Player* getPlayer();
+
 private:
 
 	unsigned int width;
 	unsigned int height;
 	
 	std::list<std::unique_ptr<Entity>> entities;
+	std::vector<Entity*> cutScenePlants;
+
 	Ghost* ghost = nullptr;
 	Player* player = nullptr;
 

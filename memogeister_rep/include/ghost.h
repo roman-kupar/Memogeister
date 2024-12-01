@@ -28,11 +28,25 @@ private:
 	
 	float elapsedTime;
 
+
+
+
 public:
-	Ghost(World& world, sf::RenderWindow& window);
+	enum GhostType
+	{
+		Ghost1,
+		Ghost2,
+		Ghost3,
+		Sister
+	};
+
+	Ghost(World& world, sf::RenderWindow& windo, GhostType ghostType);
+
+
 
 	bool isToGoBack;
 	bool isOnTheRightPlace;
+	GhostType ghostType;
 
 	virtual void update(float deltaTime);
 	virtual void onCollide(Entity& other) override;

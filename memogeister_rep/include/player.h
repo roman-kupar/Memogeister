@@ -17,7 +17,12 @@ private:
 
 	float speed = 800.f;
 
+	std::vector<Entity*> gatheredPlants;
+
 public:
+
+	bool touched = false;
+
 	Player(World& world, sf::RenderWindow& window);
 
 	void updateInput(float deltaTime);
@@ -26,6 +31,12 @@ public:
 	virtual void onCollide(Entity& other) override;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	void gatherPlant(Entity* plant);
+	const std::vector<Entity*>& getGatheredPlants() const;
+
+	void clearGatheredPlants() {
+		gatheredPlants.clear();
+	}
 };
 
 #endif	

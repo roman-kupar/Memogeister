@@ -10,10 +10,8 @@ private:
 
 	sf::RenderWindow& window;
 
-
 public:
 	Plant(World& world, sf::RenderWindow& window);
-
 
 	virtual void update(float deltaTime);
 	virtual void onCollide(Entity& other) override;

@@ -24,15 +24,26 @@ public:
 		Level1,
 		Level2,
 		Level3,
+		Level4
 	};
 
 	Level currentLevel;
 
+	void proceed();
+
 	void loadPlayer(sf::RenderWindow& window);
+
+	void loadLevel1(sf::RenderWindow& window);
+	
+	void loadLevel2(sf::RenderWindow& window);
+
+	void loadLevel3(sf::RenderWindow& window);
+
+	void loadLevel4(sf::RenderWindow& window);
 
 	void spawnPlant(sf::RenderWindow& window);
 	
-	void spawnGhost(sf::RenderWindow& window);
+	void spawnGhost(sf::RenderWindow& window, Ghost::GhostType);
 	
 };
 #endif
