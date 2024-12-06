@@ -95,8 +95,12 @@ void World::update(float deltaTime)
 
 	else if (ghost->isOnTheRightPlace)
 	{
-		sf::Vector2f playerPos = player->getPosition();
-		sf::Vector2f ghostPos = ghost->getPosition();
+	 
+
+
+
+       sf::Vector2f playerPos = player->getPosition();
+	   sf::Vector2f ghostPos = ghost->getPosition();
 
 		float interactionRadius = 200.f;
 
@@ -137,7 +141,7 @@ void World::checkCollision()
 			Entity& entity2 = *(*it2);
 
 
-			if (Collision::checkCenterCollision(entity1.getSprite(), entity2.getSprite(), 30.f))
+			if (Collision::CheckCircleCollision(entity1.getSprite(), entity2.getSprite()))
 			{
 				entity1.onCollide(entity2);
 				entity2.onCollide(entity1);
